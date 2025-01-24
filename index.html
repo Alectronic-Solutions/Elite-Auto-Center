@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Elite Auto Sales offers the finest selection of luxury and performance vehicles. Find your dream car today!">
+    <meta name="keywords" content="luxury cars, auto sales, performance vehicles, car dealership">
+    <meta name="author" content="Elite Auto Sales">
+    <title>Elite Auto Sales</title>
+    <style>
+        /* General Styles */
+        :root {
+            --primary-color: #f39c12;
+            --secondary-color: #222;
+            --background-light: #f4f4f4;
+            --background-dark: #1a1a1a;
+            --text-light: #333;
+            --text-dark: #fff;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: var(--background-light);
+            color: var(--text-light);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: var(--background-dark);
+            color: var(--text-dark);
+        }
+
+        h1, h2, h3 {
+            color: var(--secondary-color);
+            transition: color 0.3s;
+        }
+
+        body.dark-mode h1,
+        body.dark-mode h2,
+        body.dark-mode h3 {
+            color: var(--text-dark);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--background-light);
+            z-index: 1000;
+            transition: opacity 0.5s;
+        }
+
+        .loading-spinner.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .spinner {
+            border: 8px solid var(--primary-color);
+            border-top: 8px solid transparent;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Header */
+        header {
+            background-color: var(--secondary-color);
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: #fff;
+            text-shadow: 3px 3px 0 #f39c12, 6px 6px 0 #e67e22;
+        }
+
+        .logo {
+            height: 80px; /* Increased logo size */
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            margin: 0 15px;
+            font-size: 1rem;
+            color: #fff;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Search Bar */
+        .search-bar {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .search-bar input {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 300px;
+            max-width: 100%;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: var(--primary-color);
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .search-bar button:hover {
+            background-color: #e67e22;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin: 0;
+            animation: fadeIn 2s ease-in-out;
+            position: relative;
+            z-index: 1;
+            color: #fff;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin: 20px 0;
+            animation: fadeIn 2.5s ease-in-out;
+            position: relative;
+            z-index: 1;
+            color: #fff;
+        }
+
+        .hero button {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 15px 30px;
+            font-size: 1rem;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            animation: fadeIn 3s ease-in-out;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero button:hover {
+            background-color: #e67e22;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* About Section */
+        .about {
+            padding: 50px 20px;
+            text-align: center;
+            background-color: #fff;
+            transition: background-color 0.3s;
+        }
+
+        body.dark-mode .about {
+            background-color: #333;
+        }
+
+        .about h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .about p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 50px 20px;
+            background-color: var(--background-light);
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        body.dark-mode .services {
+            background-color: #2a2a2a;
+        }
+
+        .services h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .service-card {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        body.dark-mode .service-card {
+            background-color: #444;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* Inventory Section */
+        .inventory {
+            padding: 50px 20px;
+            background-color: #fff;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        body.dark-mode .inventory {
+            background-color: #333;
+        }
+
+        .inventory h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .car-card {
+            background-color: var(--background-light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        body.dark-mode .car-card {
+            background-color: #444;
+        }
+
+        .car-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .car-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            loading="lazy";
+        }
+
+        .car-card h3 {
+            font-size: 1.5rem;
+            margin: 15px 0;
+        }
+
+        .car-card p {
+            font-size: 1rem;
+            margin: 0 15px 15px;
+        }
+
+        .car-card button {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: background-color 0.3s;
+        }
+
+        .car-card button:hover {
+            background-color: #e67e22;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 50px 20px;
+            background-color: var(--background-light);
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        body.dark-mode .testimonials {
+            background-color: #2a2a2a;
+        }
+
+        .testimonials h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .testimonials-grid {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .testimonial-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .testimonial-card.active {
+            opacity: 1;
+        }
+
+        .testimonial-card p {
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .testimonial-card h4 {
+            font-size: 1.2rem;
+            margin-top: 15px;
+            color: var(--primary-color);
+        }
+
+        /* Call-to-Action Banner */
+        .cta-banner {
+            background-color: var(--secondary-color);
+            color: #fff;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .cta-banner h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #fff; /* White text for "Ready to Drive Your Dream Car?" */
+        }
+
+        .cta-banner button {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 15px 30px;
+            font-size: 1rem;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .cta-banner button:hover {
+            background-color: #e67e22;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 50px 20px;
+            background-color: #fff;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        body.dark-mode .contact {
+            background-color: #333;
+        }
+
+        .contact h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .contact form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact input, .contact textarea {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: var(--background-light);
+            color: var(--text-light);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode .contact input,
+        body.dark-mode .contact textarea {
+            background-color: #444;
+            color: var(--text-dark);
+        }
+
+        .contact textarea {
+            resize: none; /* Prevent resizing */
+        }
+
+        .contact button {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 15px 30px;
+            font-size: 1rem;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .contact button:hover {
+            background-color: #e67e22;
+        }
+
+        /* Newsletter Section */
+        .newsletter {
+            padding: 50px 20px;
+            background-color: var(--background-light);
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        body.dark-mode .newsletter {
+            background-color: #2a2a2a;
+        }
+
+        .newsletter h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .newsletter form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .newsletter input {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: var(--background-light);
+            color: var(--text-light);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode .newsletter input {
+            background-color: #444;
+            color: var(--text-dark);
+        }
+
+        .newsletter button {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 15px 30px;
+            font-size: 1rem;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .newsletter button:hover {
+            background-color: #e67e22;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-color);
+            color: #fff;
+            padding: 50px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1); /* Divider */
+        }
+
+        footer .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        footer h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        footer a {
+            display: block;
+            margin: 10px 0;
+            color: #fff;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: var(--primary-color);
+        }
+
+        footer p {
+            margin-top: 20px;
+            font-size: 1rem;
+        }
+
+        footer .logo {
+            height: 80px; /* Increased logo size */
+            margin-bottom: 20px;
+        }
+
+        .copyright-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px; /* Space between copyright text and links */
+            margin-top: 20px;
+        }
+
+        .copyright {
+            margin: 0; /* Remove default margin */
+            font-size: 0.9rem;
+            color: #ccc;
+            text-align: center;
+        }
+
+        .copyright a {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px; /* Space between Privacy Policy and Terms of Service links */
+            font-size: 0.9rem;
+        }
+
+        .footer-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #e67e22;
+        }
+
+        /* Back-to-Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 60px;
+            right: 20px;
+            background-color: var(--primary-color);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+        }
+
+        .back-to-top:hover {
+            background-color: #e67e22;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 60px;
+            left: 20px;
+            background-color: var(--primary-color);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+        }
+
+        .dark-mode-toggle:hover {
+            background-color: #e67e22;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+        }
+
+        body.dark-mode .modal-content {
+            background-color: #444;
+            color: var(--text-dark);
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .modal-content h3 {
+            font-size: 2rem;
+            margin: 15px 0;
+        }
+
+        .modal-content p {
+            font-size: 1rem;
+            margin: 10px 0;
+        }
+
+        .modal-content button {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+
+        .modal-content button:hover {
+            background-color: #e67e22;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #333;
+        }
+
+        body.dark-mode .close {
+            color: #fff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .about h2, .services h2, .inventory h2, .testimonials h2, .cta-banner h2, .contact h2, .newsletter h2 {
+                font-size: 2rem;
+            }
+
+            .inventory-grid, .services-grid, .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Spinner -->
+    <div class="loading-spinner">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <img src="images/logo.png" alt="Elite Auto Sales Logo" class="logo">
+        <h1>Elite Auto Sales</h1>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#inventory">Inventory</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <video autoplay muted loop id="hero-video">
+            <source src="videos/hero-background.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div>
+            <h2>Your Dream Car Awaits</h2>
+            <p>Discover the finest selection of luxury and performance vehicles.</p>
+            <button onclick="scrollToSection('inventory')">View Inventory</button>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <h2>About Us</h2>
+        <p>At Elite Auto Sales, we pride ourselves on offering the best in luxury and performance vehicles. With over 20 years of experience, our team is dedicated to providing exceptional service and helping you find the perfect car to match your lifestyle. We offer a wide range of vehicles, from sleek sedans to powerful SUVs, all meticulously inspected and maintained.</p>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <h2>Our Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Vehicle Financing</h3>
+                <p>We offer flexible financing options to help you drive away in your dream car today.</p>
+            </div>
+            <div class="service-card">
+                <h3>Trade-In Appraisals</h3>
+                <p>Get a fair and competitive offer for your current vehicle with our trade-in program.</p>
+            </div>
+            <div class="service-card">
+                <h3>Maintenance & Repairs</h3>
+                <p>Keep your vehicle in top condition with our expert maintenance and repair services.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inventory Section -->
+    <section id="inventory" class="inventory">
+        <h2>Our Inventory</h2>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search for cars..." aria-label="Search for cars">
+            <button onclick="filterCars()">Search</button>
+        </div>
+        <div class="inventory-grid" id="inventoryGrid">
+            <!-- Car 1 -->
+            <div class="car-card">
+                <img src="images/car1.jpg" alt="Luxury Sedan" loading="lazy">
+                <h3>2023 Luxury Sedan</h3>
+                <p>Experience the pinnacle of luxury with this state-of-the-art sedan.</p>
+                <button onclick="openModal('modal1')">Learn More</button>
+            </div>
+            <!-- Car 2 -->
+            <div class="car-card">
+                <img src="images/car2.jpg" alt="Sports Coupe" loading="lazy">
+                <h3>2023 Sports Coupe</h3>
+                <p>Unleash the power of this high-performance sports coupe.</p>
+                <button onclick="openModal('modal2')">Learn More</button>
+            </div>
+            <!-- Car 3 -->
+            <div class="car-card">
+                <img src="images/car3.jpg" alt="SUV" loading="lazy">
+                <h3>2023 SUV</h3>
+                <p>Take on any adventure with this versatile and spacious SUV.</p>
+                <button onclick="openModal('modal3')">Learn More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <h2>What Our Customers Say</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card active">
+                <p>"Elite Auto Sales made the car-buying process seamless. I drove away in my dream car with no hassle!"</p>
+                <h4>- John Doe</h4>
+            </div>
+            <div class="testimonial-card">
+                <p>"The team was professional and knowledgeable. I highly recommend Elite Auto Sales!"</p>
+                <h4>- Jane Smith</h4>
+            </div>
+            <div class="testimonial-card">
+                <p>"Fantastic service and a great selection of vehicles. I couldn't be happier with my purchase."</p>
+                <h4>- Michael Johnson</h4>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call-to-Action Banner -->
+    <section class="cta-banner">
+        <h2>Ready to Drive Your Dream Car?</h2>
+        <button onclick="scrollToSection('contact')">Contact Us Today</button>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <h2>Subscribe to Our Newsletter</h2>
+        <form>
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit">Subscribe</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <h3>Quick Links</h3>
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#inventory">Inventory</a>
+                <a href="#testimonials">Testimonials</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div>
+                <h3>Contact Info</h3>
+                <p>123 Main St, New York, NY 10001</p>
+                <p>Phone: +1-555-123-4567</p>
+                <p>Email: info@eliteautosales.com</p>
+            </div>
+            <div>
+                <h3>Follow Us</h3>
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+                <a href="#">LinkedIn</a>
+            </div>
+        </div>
+        <img src="images/logo.png" alt="Elite Auto Sales Logo" class="logo">
+        <div class="copyright-container">
+            <p class="copyright">© 2025 Design by <a href="https://alectronic-solutions.github.io/home" target="_blank">Alectronic Solutions</a>. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="privacy-terms.html">Privacy Policy</a>
+                <a href="privacy-terms.html">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back-to-Top Button -->
+    <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
+
+    <!-- Modals -->
+    <!-- Modal 1 -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal1')">&times;</span>
+            <img src="images/car1.jpg" alt="Luxury Sedan">
+            <h3>2023 Luxury Sedan</h3>
+            <p><strong>Price:</strong> $75,000</p>
+            <p><strong>Engine:</strong> 3.0L V6 Turbo</p>
+            <p><strong>Features:</strong> Leather seats, panoramic sunroof, advanced safety systems, and a premium sound system.</p>
+            <button onclick="closeModal('modal1')">Close</button>
+        </div>
+    </div>
+    <!-- Modal 2 -->
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal2')">&times;</span>
+            <img src="images/car2.jpg" alt="Sports Coupe">
+            <h3>2023 Sports Coupe</h3>
+            <p><strong>Price:</strong> $95,000</p>
+            <p><strong>Engine:</strong> 4.0L V8 Twin-Turbo</p>
+            <p><strong>Features:</strong> Carbon fiber body, racing seats, adaptive suspension, and a track-ready performance package.</p>
+            <button onclick="closeModal('modal2')">Close</button>
+        </div>
+    </div>
+    <!-- Modal 3 -->
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal3')">&times;</span>
+            <img src="images/car3.jpg" alt="SUV">
+            <h3>2023 SUV</h3>
+            <p><strong>Price:</strong> $85,000</p>
+            <p><strong>Engine:</strong> 3.5L V6 Hybrid</p>
+            <p><strong>Features:</strong> 7-seater, all-wheel drive, advanced off-road capabilities, and a state-of-the-art infotainment system.</p>
+            <button onclick="closeModal('modal3')">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+
+        // Load dark mode preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+
+        // Loading spinner
+        window.addEventListener('load', () => {
+            const spinner = document.querySelector('.loading-spinner');
+            spinner.classList.add('hide');
+        });
+
+        // Filter cars in inventory
+        function filterCars() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.car-card');
+            cards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                if (title.includes(input)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Testimonials Carousel
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial-card');
+
+        function showNextTestimonial() {
+            testimonials[currentTestimonial].classList.remove('active');
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            testimonials[currentTestimonial].classList.add('active');
+        }
+
+        setInterval(showNextTestimonial, 5000);
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+</html>
